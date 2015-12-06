@@ -1,4 +1,4 @@
-# kochomat
+# mymensa_bot
 *telegram bot for the OpenMensa API*
 
 Simple Telegram Bot for the <a href="">OpenMensa API</a> using the <a href="">node-telegram-bot-api</a>, written in Node.js.
