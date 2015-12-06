@@ -24,7 +24,7 @@ exports.getMealsByID = function(chatID, canteenID, callback) {
 
 function getDateString() {
 	var today = new Date();
-	return (today.getMonth()+1)+'-'+today.getDate()+'-'+today.getFullYear();
+	return (today.getMonth()+1)+'-'+(today.getDate()+1)+'-'+today.getFullYear();
 	//@testing
 	//return "12-8-2015";
 }

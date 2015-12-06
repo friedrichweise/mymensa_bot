@@ -55,7 +55,9 @@ function responseMeals(msg, result) {
     }
     for (i=0; i<result.length; i++) {
       var meal = result[i];
-      output+='📂 '+meal.category+' ▶️ '+meal.name+' ◀️️ ';
+      var notes = '';
+      if(evaluateNotes(meal.notes,'vegetarisch')) notes+="🌱";
+      output+='📂 '+meal.category+' ▶️ '+meal.name+','+notes+' ◀️️ ';
       if(meal.prices.students!=null) output+= 'Student: '+meal.prices.students+'€';
       if(meal.prices.employees!=null) output+= ' Mitarbeiter: '+meal.prices.employees+'€ 💰';
       output+='\n';
@@ -65,6 +67,13 @@ function responseMeals(msg, result) {
       return;
     }
     bot.sendMessage(msg.chat.id, output);
+}
+function evaluateNotes(notes,query) {
+  if(notes===null) return false;
+  for(var i=0; i<notes.length; i++) {
+    if(notes[i].indexOf(query)>-1) return true;
+  }
+  return false;
 }
 ///////////////////
 //global error call
