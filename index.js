@@ -47,18 +47,26 @@ bot.onText(/^\/meals (.+)$/, function(msg, match){
 });
 function responseMeals(msg, result) {
     var output = "";
+    if(result===null) {
+      botSendError(msg);
+      return;
+    }
     for (i=0; i<result.length; i++) {
       var meal = result[i];
       output+='📂 '+meal.category+' ▶️ '+meal.name+' ◀️️ ';
       if(meal.prices.students!=null) output+= 'Student: '+meal.prices.students+'€';
-      if(meal.prices.employees!=null) output+= ' Mitarbeiter: '+meal.prices.employees+'€';
+      if(meal.prices.employees!=null) output+= ' Mitarbeiter: '+meal.prices.employees+'€ 💰';
       output+='\n';
     }
-    if(output=="") botSendError(msg);
+    if(output=="") {
+      botSendError(msg);
+      return;
+    }
     bot.sendMessage(msg.chat.id, output);
 }
-
-
+///////////////////
+//global error call
+///////////////////
 function botSendError(msg) {
   bot.sendMessage(msg.chat.id, '❌ Keine Ergebnisse');
 }
