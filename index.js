@@ -14,19 +14,27 @@ bot.onText(/^\/mensa (.+)$/, function(msg, match){
   });
 });
 function responseCanteenCity(msg, result) {
-  var out = [];
-  for (i=0; i<result.length; i++) {
-      out.push([result[i].name+" ID:"+result[i].id,"/meals "+result[i].id]);
+  if(result===null) {
+    botSendError(msg);
   }
-  if(out.length==0) bot.sendMessage(msg.chat.id, '❌ Keine Ergebnisse');
   else {
-    var opts = {
-        reply_to_message_id: msg.message_id,
-        reply_markup: JSON.stringify({keyboard: out, one_time_keyboard: true,resize_keyboard:false})
-    };
-    bot.sendMessage(msg.chat.id, 'Resultat:', opts);
+    var out = [];
+    for (i=0; i<result.length; i++) {
+        out.push([result[i].name+" ID:"+result[i].id,"/meals "+result[i].id]);
+    }
+    if(out.length==0) botSendError(msg);
+    else {
+      var opts = {
+          reply_to_message_id: msg.message_id,
+          reply_markup: JSON.stringify({keyboard: out, one_time_keyboard: true,resize_keyboard:false})
+      };
+      bot.sendMessage(msg.chat.id, 'Resultat:', opts);
+    }
   }
 }
+
+
+
 /////////////////////////
 //get meals by canteen id
 /////////////////////////
@@ -46,8 +54,13 @@ function responseMeals(msg, result) {
       if(meal.prices.employees!=null) output+= ' Mitarbeiter: '+meal.prices.employees+'€';
       output+='\n';
     }
-    if(output=="") output = "❌ Keine Angebote"
+    if(output=="") botSendError(msg);
     bot.sendMessage(msg.chat.id, output);
+}
+
+
+function botSendError(msg) {
+  bot.sendMessage(msg.chat.id, '❌ Keine Ergebnisse');
 }
 
 ////////

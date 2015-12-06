@@ -1,7 +1,9 @@
-# mymensa_bot
+<img src="profile_photo/mymensabot.png" style="margin:0px auto; display: block"/>
+
+# mymensa_bot - <a href="http://telegram.me/mymensa_bot">@mymensa_bot</a>
 *telegram bot for the OpenMensa API*
 
-Simple Telegram Bot for the <a href="">OpenMensa API</a> using the <a href="">node-telegram-bot-api</a>, written in Node.js.
+Simple Telegram Bot for the <a href="https://openmensa.org">OpenMensa API</a> using the <a href="https://github.com/yagop/node-telegram-bot-api">node-telegram-bot-api</a>, written in Node.js.
 
 
 ### Install Dev Environment
