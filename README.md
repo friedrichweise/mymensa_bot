@@ -1,5 +1,5 @@
 <p align="center">
-<img src="profile_photo/mymensabot.png"/>
+<img src="profile_photo/bunner.png"/>
 </p>
 
 # mymensa_bot - <a href="http://telegram.me/mymensa_bot">@mymensa_bot</a>
