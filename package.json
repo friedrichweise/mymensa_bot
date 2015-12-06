@@ -1,0 +1,16 @@
+{
+  "name": "kochomat",
+  "version": "1.0.0",
+  "description": "simple telegram bot for the OpenMensaAPI",
+  "main": "index.js",
+  "author": "friedrich",
+  "scripts": {
+    "start": "nodemon -e js,html index.js"
+  },
+  "devDependencies": {
+  	"nodeman":"*"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.17.0"
+  }
+}
