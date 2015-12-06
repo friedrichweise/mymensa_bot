@@ -20,9 +20,9 @@ function responseCanteenCity(msg, result, city) {
   else {
     var out = [];
     for (i=0; i<result.length; i++) {
-        var re = new RegExp(city+',', "gi");
-        var name = result[i].name.replace(re, "");
-        out.push([name+" ID:"+result[i].id,"/meals "+result[i].id]);
+        var re = new RegExp(city+',', 'gi');
+        var name = result[i].name.replace(re, '');
+        out.push([name+' ID:'+result[i].id,'/meals '+result[i].id]);
     }
     if(out.length==0) botSendError(msg);
     else {
@@ -48,7 +48,7 @@ bot.onText(/^\/meals (.+)$/, function(msg, match){
   });
 });
 function responseMeals(msg, result) {
-    var output = "";
+    var output = '';
     if(result===null) {
       botSendError(msg);
       return;
@@ -56,13 +56,17 @@ function responseMeals(msg, result) {
     for (i=0; i<result.length; i++) {
       var meal = result[i];
       var notes = '';
-      if(evaluateNotes(meal.notes,'vegetarisch')) notes+="🌱";
+      if(evaluateNotes(meal.notes,'vegetarisch')) notes+='🌱';
+      if(evaluateNotes(meal.notes,'Alkohol')) notes+='🍷';
+      if(evaluateNotes(meal.notes, 'Rindfleisch')) notes+='🐮';
+      if(evaluateNotes(meal.notes, 'Schweinefleisch')) notes+='🐷'
+        
       output+='📂 '+meal.category+' ▶️ '+meal.name+','+notes+' ◀️️ ';
       if(meal.prices.students!=null) output+= 'Student: '+meal.prices.students+'€';
       if(meal.prices.employees!=null) output+= ' Mitarbeiter: '+meal.prices.employees+'€ 💰';
       output+='\n';
     }
-    if(output=="") {
+    if(output=='') {
       botSendError(msg);
       return;
     }
@@ -85,5 +89,5 @@ function botSendError(msg) {
 ////////
 //@debug
 bot.on('message', function (msg) {
-  console.log("⭕️  New Message: "+msg.text);
+  console.log('⭕️  New Message: '+msg.text);
 });

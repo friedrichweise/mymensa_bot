@@ -21,3 +21,11 @@ npm start
 #### /meals [CANTEEN_ID]
 **Example:** `meals 79` <br>
 **Returns:** list of meals for the current day
+
+### Extras
+| Text  |  Icon |
+|---|---|
+| vegetarisch  | 🌱  |
+|  Alkohol | 🍷  |
+|  Rindfleisch |  🐮 |
+|  Schweinefleisch | 🐷 |
