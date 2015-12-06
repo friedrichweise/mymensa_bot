@@ -20,7 +20,7 @@ function responseCanteenCity(msg, result, city) {
   else {
     var out = [];
     for (i=0; i<result.length; i++) {
-        var re = new RegExp(city+',', "g");
+        var re = new RegExp(city+',', "gi");
         var name = result[i].name.replace(re, "");
         out.push([name+" ID:"+result[i].id,"/meals "+result[i].id]);
     }
@@ -30,7 +30,7 @@ function responseCanteenCity(msg, result, city) {
           reply_to_message_id: msg.message_id,
           reply_markup: JSON.stringify({keyboard: out, one_time_keyboard: true,resize_keyboard:false})
       };
-      bot.sendMessage(msg.chat.id, 'Ergebnisse für'+city+':', opts);
+      bot.sendMessage(msg.chat.id, 'Ergebnisse für '+city+':', opts);
     }
   }
 }
