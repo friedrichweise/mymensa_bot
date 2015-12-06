@@ -1,4 +1,6 @@
-<img src="profile_photo/mymensabot.png" style="margin:0px auto; display: block"/>
+<p align="center">
+<img src="profile_photo/mymensabot.png"/>
+</p>
 
 # mymensa_bot - <a href="http://telegram.me/mymensa_bot">@mymensa_bot</a>
 *telegram bot for the OpenMensa API*
