@@ -1,11 +1,12 @@
-//test bot token:
-var token = '157406739:AAGQSuN3uVUKCLvVo6uk3wPeGOqJYO6Wu0E';
+var token = require('./token.js').token;
 var mensa = require('./openmensa.js');
 var Bot = require('node-telegram-bot-api'),
     bot = new Bot(token, { polling: true });
 
 
+/////////////////////
 //get canteen by city
+/////////////////////
 bot.onText(/^\/mensa (.+)$/, function(msg, match){
   var city = match[1];
   bot.sendChatAction(msg.chat.id, 'typing').then(function () {
@@ -26,8 +27,9 @@ function responseCanteenCity(msg, result) {
     bot.sendMessage(msg.chat.id, 'Resultat:', opts);
   }
 }
-
+/////////////////////////
 //get meals by canteen id
+/////////////////////////
 bot.onText(/^\/meals (.+)$/, function(msg, match){
   var chatID = msg.chat.id;
   var canteenID = match[1];
@@ -48,6 +50,7 @@ function responseMeals(msg, result) {
     bot.sendMessage(msg.chat.id, output);
 }
 
+////////
 //@debug
 bot.on('message', function (msg) {
   console.log("⭕️  New Message: "+msg.text);
