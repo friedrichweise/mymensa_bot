@@ -11,7 +11,7 @@ exports.getCanteenByCity = function (chatID, city, callback) {
 			var mensa = response[i];
 			if(mensa.city.toLowerCase()==city.toLowerCase()) result.push(mensa);
 		}
-		callback(chatID,result);	
+		callback(chatID,result, city);	
 	});
 }
 

@@ -13,14 +13,16 @@ bot.onText(/^\/mensa (.+)$/, function(msg, match){
       mensa.getCanteenByCity(msg, city, responseCanteenCity);
   });
 });
-function responseCanteenCity(msg, result) {
+function responseCanteenCity(msg, result, city) {
   if(result===null) {
     botSendError(msg);
   }
   else {
     var out = [];
     for (i=0; i<result.length; i++) {
-        out.push([result[i].name+" ID:"+result[i].id,"/meals "+result[i].id]);
+        var re = new RegExp(city+',', "g");
+        var name = result[i].name.replace(re, "");
+        out.push([name+" ID:"+result[i].id,"/meals "+result[i].id]);
     }
     if(out.length==0) botSendError(msg);
     else {
@@ -28,7 +30,7 @@ function responseCanteenCity(msg, result) {
           reply_to_message_id: msg.message_id,
           reply_markup: JSON.stringify({keyboard: out, one_time_keyboard: true,resize_keyboard:false})
       };
-      bot.sendMessage(msg.chat.id, 'Resultat:', opts);
+      bot.sendMessage(msg.chat.id, 'Ergebnisse für'+city+':', opts);
     }
   }
 }
