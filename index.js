@@ -22,7 +22,7 @@ function responseCanteenCity(msg, result, city) {
     for (i=0; i<result.length; i++) {
         var re = new RegExp(city+',', 'gi');
         var name = result[i].name.replace(re, '');
-        out.push([name+' ID:'+result[i].id,'/meals '+result[i].id]);
+        out.push([name+' ➡️','/meals '+result[i].id]);
     }
     if(out.length==0) botSendError(msg);
     else {
