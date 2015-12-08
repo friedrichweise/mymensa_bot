@@ -63,12 +63,13 @@ bot.onText(/^\/meals (.+)$/, function(msg, match){
       mensa.getMealsByID(msg, canteenID,extraModifier, responseMeals);
   });
 });
-function responseMeals(msg, result, extraModifier) {
+function responseMeals(msg, result, extraResult) {
     var output = '';
     if(result===null) {
       botSendError(msg);
       return;
     }
+    if(extraResult.canteenName!=null) output+='Ergebnisse für '+extraResult.canteenName+':\n\n';
     for (i=0; i<result.length; i++) {
       var meal = result[i];
       var flag = false;
@@ -78,10 +79,10 @@ function responseMeals(msg, result, extraModifier) {
         var extra = extras.items[a];
         if(evaluateNotes(meal.notes,extra.keywords)) {
           notes+=extra.icon;
-          if(extraModifier==extra.icon) flag = true;
+          if(extraResult.modifier==extra.icon) flag = true;
         }
       }
-      if(flag==true || extraModifier=='') {
+      if(flag==true || extraResult.modifier=='') {
         output+='📂 '+meal.category+' ▶️ '+meal.name+','+notes+' ◀️️ ';
         if(meal.prices.students!=null) output+= 'Student: '+meal.prices.students+'€';
         if(meal.prices.employees!=null) output+= ' Mitarbeiter: '+meal.prices.employees+'€ 💰';

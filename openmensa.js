@@ -1,10 +1,12 @@
 var http = require('http');
-
+var canteens;
 
 exports.getCanteenByCity = function (msg, city, callback) { 
 	var result = [];
 	var path = '/api/v2/canteens?limit=500';
 	mensaCall(path, function(response){
+		//simple canteen cache
+		canteens = response;
 		//filter by city
 		if(response===null) return callback(msg, response)
 		for(i=0; i<response.length; i++) {
@@ -18,7 +20,14 @@ exports.getCanteenByCity = function (msg, city, callback) {
 exports.getMealsByID = function(msg, canteenID,extraModifier, callback) {
 	var path = '/api/v2/canteens/'+canteenID+'/days/'+getDateString()+'/meals';
 	mensaCall(path,function(response){
-		callback(msg, response, extraModifier);
+		//get Canteen Name
+		var canteenName = null;
+		if(canteens!=null){
+			for(i=0; i<canteens.length; i++) {
+				if(canteens[i].id==canteenID) canteenName=canteens[i].name;
+			}
+		}
+		callback(msg, response, {"modifier":extraModifier,"canteenName":canteenName});
 	});
 }
 
