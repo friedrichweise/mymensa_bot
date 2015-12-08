@@ -4,6 +4,14 @@ var Bot = require('node-telegram-bot-api'),
     bot = new Bot(token, { polling: true });
 
 
+var extras = {"items":[
+          {"icon": "🌱","keywords":["vegetarisch","vegan"]},
+          {"icon": "🍷", "keywords":["Alkohol"]},
+          {"icon": "🐮", "keywords":["Rindfleisch"]},
+          {"icon": "🐷", "keywords":["Schweinefleisch"]}
+]};
+
+
 /////////////////////
 //get canteen by city
 /////////////////////
@@ -55,12 +63,13 @@ function responseMeals(msg, result) {
     }
     for (i=0; i<result.length; i++) {
       var meal = result[i];
+
       var notes = '';
-      if(evaluateNotes(meal.notes,'vegetarisch')) notes+='🌱';
-      if(evaluateNotes(meal.notes,'Alkohol')) notes+='🍷';
-      if(evaluateNotes(meal.notes, 'Rindfleisch')) notes+='🐮';
-      if(evaluateNotes(meal.notes, 'Schweinefleisch')) notes+='🐷'
-        
+      //add extra icons
+      for(var a=0; a<extras.items.length; a++) {
+        var extra = extras.items[a];
+        if(evaluateNotes(meal.notes,extra.keywords)) notes+=extra.icon;
+      }
       output+='📂 '+meal.category+' ▶️ '+meal.name+','+notes+' ◀️️ ';
       if(meal.prices.students!=null) output+= 'Student: '+meal.prices.students+'€';
       if(meal.prices.employees!=null) output+= ' Mitarbeiter: '+meal.prices.employees+'€ 💰';
@@ -73,9 +82,11 @@ function responseMeals(msg, result) {
     bot.sendMessage(msg.chat.id, output);
 }
 function evaluateNotes(notes,query) {
-  if(notes===null) return false;
+  if(notes===null | query===null) return false;
   for(var i=0; i<notes.length; i++) {
-    if(notes[i].indexOf(query)>-1) return true;
+    for(var a=0; a<query.length; a++) {
+        if(notes[i].indexOf(query[a])>-1) return true;
+    }
   }
   return false;
 }
