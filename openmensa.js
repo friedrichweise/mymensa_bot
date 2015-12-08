@@ -1,24 +1,24 @@
 var http = require('http');
 
 
-exports.getCanteenByCity = function (chatID, city, callback) { 
+exports.getCanteenByCity = function (msg, city, callback) { 
 	var result = [];
 	var path = '/api/v2/canteens?limit=500';
 	mensaCall(path, function(response){
 		//filter by city
-		if(response===null) return callback(chatID, response)
+		if(response===null) return callback(msg, response)
 		for(i=0; i<response.length; i++) {
 			var mensa = response[i];
 			if(mensa.city.toLowerCase()==city.toLowerCase()) result.push(mensa);
 		}
-		callback(chatID,result, city);	
+		callback(msg, result, city);	
 	});
 }
 
-exports.getMealsByID = function(chatID, canteenID, callback) {
+exports.getMealsByID = function(msg, canteenID,extraModifier, callback) {
 	var path = '/api/v2/canteens/'+canteenID+'/days/'+getDateString()+'/meals';
 	mensaCall(path,function(response){
-		callback(chatID, response);
+		callback(msg, response, extraModifier);
 	});
 }
 

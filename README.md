@@ -19,13 +19,20 @@ npm start
 **Example:** `/mensa berlin` <br>
 **Returns:** custom keyboard with canteen selection
 #### /meals [CANTEEN_ID]
-**Example:** `meals 79` <br>
+**Example:** `/meals 79` <br>
 **Returns:** list of meals for the current day
+
+#### /meals [CANTEEN_ID] [EXTRA_ICON]
+**Example:** `/meals 79 🌱` <br>
+**Returns:** list of meals that match the extra text ('vegetarisch' OR 'vegan') <br><br>
+**Example:** `/meals 79 🐮` <br>
+**Returns:** list of meals with 'Rindfleisch'<br>
+
 
 ### Extras
 | Text  |  Icon |
 |---|---|
-| vegetarisch  | 🌱  |
-|  Alkohol | 🍷  |
-|  Rindfleisch |  🐮 |
-|  Schweinefleisch | 🐷 |
+| 'vegetarisch' OR 'vegan'  | 🌱  |
+|  'Alkohol' | 🍷  |
+|  'Rindfleisch' |  🐮 |
+|  'Schweinefleisch' | 🐷 |

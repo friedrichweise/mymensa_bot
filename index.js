@@ -51,12 +51,19 @@ function responseCanteenCity(msg, result, city) {
 /////////////////////////
 bot.onText(/^\/meals (.+)$/, function(msg, match){
   var chatID = msg.chat.id;
-  var canteenID = match[1];
+
+  var input = match[1].split(' ');
+  var canteenID = input[0];
+  var extraModifier = '';
+  for(var a=0; (input.length>1 && a<extras.items.length); a++) {
+      if(input[1]==extras.items[a].icon) extraModifier = extras.items[a].icon;
+  }
+
   bot.sendChatAction(chatID, 'typing').then(function () {
-      mensa.getMealsByID(msg, canteenID, responseMeals);
+      mensa.getMealsByID(msg, canteenID,extraModifier, responseMeals);
   });
 });
-function responseMeals(msg, result) {
+function responseMeals(msg, result, extraModifier) {
     var output = '';
     if(result===null) {
       botSendError(msg);
@@ -64,17 +71,22 @@ function responseMeals(msg, result) {
     }
     for (i=0; i<result.length; i++) {
       var meal = result[i];
-
+      var flag = false;
       var notes = '';
       //add extra icons
       for(var a=0; a<extras.items.length; a++) {
         var extra = extras.items[a];
-        if(evaluateNotes(meal.notes,extra.keywords)) notes+=extra.icon;
+        if(evaluateNotes(meal.notes,extra.keywords)) {
+          notes+=extra.icon;
+          if(extraModifier==extra.icon) flag = true;
+        }
       }
-      output+='📂 '+meal.category+' ▶️ '+meal.name+','+notes+' ◀️️ ';
-      if(meal.prices.students!=null) output+= 'Student: '+meal.prices.students+'€';
-      if(meal.prices.employees!=null) output+= ' Mitarbeiter: '+meal.prices.employees+'€ 💰';
-      output+='\n';
+      if(flag==true || extraModifier=='') {
+        output+='📂 '+meal.category+' ▶️ '+meal.name+','+notes+' ◀️️ ';
+        if(meal.prices.students!=null) output+= 'Student: '+meal.prices.students+'€';
+        if(meal.prices.employees!=null) output+= ' Mitarbeiter: '+meal.prices.employees+'€ 💰';
+        output+='\n';
+      }
     }
     if(output=='') {
       botSendError(msg);
