@@ -11,6 +11,7 @@ var extras = {"items":[
           {"icon": "🐷", "keywords":["Schweinefleisch"]}
 ]};
 
+var helpText = "Welcome to mymensa_bot \nPlease use the /mensa command to search for canteens in your city (example: /mensa Berlin). You are going to receive a custom keyboard that contains further commands.";
 
 /////////////////////
 //get canteen by city
@@ -90,6 +91,12 @@ function evaluateNotes(notes,query) {
   }
   return false;
 }
+
+
+
+bot.onText(/\/help/,function(msg){
+  bot.sendMessage(msg.chat.id,helpText);
+});
 ///////////////////
 //global error call
 ///////////////////
