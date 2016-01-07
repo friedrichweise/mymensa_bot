@@ -83,10 +83,10 @@ function responseMeals(msg, result, extraResult) {
         }
       }
       if(flag==true || extraResult.modifier=='') {
-        output+='`▸ '+meal.category+'` : *'+meal.name+'*, _';
-        if(meal.prices.students!=null) output+= 'Student: '+meal.prices.students+'€';
-        if(meal.prices.employees!=null) output+= ' Mitarbeiter: '+meal.prices.employees+'€';
-        output+='_ ,'+notes;
+        output+='`▸ '+meal.category+'` : *'+meal.name+'*';
+        if(meal.prices.students!=null) output+= ', Student: *'+meal.prices.students+'*€';
+        if(meal.prices.employees!=null) output+= ' Mitarbeiter: *'+meal.prices.employees+'*€';
+        output+=' '+notes;
         output+='\n';
       }
     }
