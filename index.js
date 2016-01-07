@@ -83,9 +83,10 @@ function responseMeals(msg, result, extraResult) {
         }
       }
       if(flag==true || extraResult.modifier=='') {
-        output+='📂 '+meal.category+' ▶️ '+meal.name+','+notes+' ◀️️ ';
+        output+='`▸ '+meal.category+'` : *'+meal.name+'*, _';
         if(meal.prices.students!=null) output+= 'Student: '+meal.prices.students+'€';
-        if(meal.prices.employees!=null) output+= ' Mitarbeiter: '+meal.prices.employees+'€ 💰';
+        if(meal.prices.employees!=null) output+= ' Mitarbeiter: '+meal.prices.employees+'€';
+        output+='_ ,'+notes;
         output+='\n';
       }
     }
@@ -93,7 +94,10 @@ function responseMeals(msg, result, extraResult) {
       botSendError(msg);
       return;
     }
-    bot.sendMessage(msg.chat.id, output);
+    var opts = {
+          parse_mode: 'Markdown',
+    };
+    bot.sendMessage(msg.chat.id, output,opts);
 }
 function evaluateNotes(notes,query) {
   if(notes===null | query===null) return false;
