@@ -7,13 +7,6 @@
 Simple Telegram Bot for the <a href="https://openmensa.org">OpenMensa API</a> using the <a href="https://github.com/yagop/node-telegram-bot-api">node-telegram-bot-api</a>, written in Node.js.
 
 
-### Install Dev Environment
-```
-git clone
-npm update
-npm start
-```
-
 ### Commands
 #### /mensa [CITY]
 **Example:** `/mensa berlin` <br>
@@ -28,11 +21,19 @@ npm start
 **Example:** `/meals 79 🐮` <br>
 **Returns:** list of meals with 'Rindfleisch'<br>
 
-
 ### Extras
+*feel free to contribute:*
+
 | Text  |  Icon |
 |---|---|
 | 'vegetarisch' OR 'vegan'  | 🌱  |
 |  'Alkohol' | 🍷  |
 |  'Rindfleisch' |  🐮 |
 |  'Schweinefleisch' | 🐷 |
+
+### Install Dev Environment
+```
+git clone
+npm update
+npm start
+```
