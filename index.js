@@ -84,8 +84,8 @@ function responseMeals(msg, result, extraResult) {
       }
       if(flag==true || extraResult.modifier=='') {
         output+='`▸ '+meal.category+'` : *'+meal.name+'*';
-        if(meal.prices.students!=null) output+= ', Student: *'+meal.prices.students+'*€';
-        if(meal.prices.employees!=null) output+= ' Mitarbeiter: *'+meal.prices.employees+'*€';
+        if(meal.prices.students!=null) output+= ', Student: *'+formatPrice(meal.price.students)+'*€';
+        if(meal.prices.employees!=null) output+= ' Mitarbeiter: *'+formatPrice(meal.prices.employees)+'*€';
         output+=' '+notes;
         output+='\n';
       }
@@ -108,7 +108,13 @@ function evaluateNotes(notes,query) {
   }
   return false;
 }
-
+function formatPrice(price) {
+  var parts = price.toString().split('.');
+  if(parts!=null && parts.length==2) {
+    if(parts[1].length==1) return parts[0]+"."+parts[1]+"0";
+  }
+  return price;
+}
 
 
 bot.onText(/\/help/,function(msg){
