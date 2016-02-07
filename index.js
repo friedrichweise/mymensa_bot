@@ -84,7 +84,7 @@ function responseMeals(msg, result, extraResult) {
       }
       if(flag==true || extraResult.modifier=='') {
         output+='`▸ '+meal.category+'` : *'+meal.name+'*';
-        if(meal.prices.students!=null) output+= ', Student: *'+formatPrice(meal.price.students)+'*€';
+        if(meal.prices.students!=null) output+= ', Student: *'+formatPrice(meal.prices.students)+'*€';
         if(meal.prices.employees!=null) output+= ' Mitarbeiter: *'+formatPrice(meal.prices.employees)+'*€';
         output+=' '+notes;
         output+='\n';
