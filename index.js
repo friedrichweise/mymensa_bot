@@ -5,7 +5,7 @@ var Bot = require('node-telegram-bot-api'),
 
 
 var extras = {"items":[
-          {"icon": "🌱","keywords":["vegetarisch","vegan"]},
+          {"icon": "🌱","keywords": ["vegetarisch","vegan"]},
           {"icon": "🍷", "keywords":["Alkohol"]},
           {"icon": "🐮", "keywords":["Rindfleisch"]},
           {"icon": "🐷", "keywords":["Schweinefleisch"]}
@@ -51,6 +51,7 @@ function responseCanteenCity(msg, result, city) {
 /////////////////////////
 bot.onText(/^\/meals (.+)$/, function(msg, match){
   var chatID = msg.chat.id;
+  console.log(msg);
 
   var input = match[1].split(' ');
   var canteenID = input[0];
@@ -119,6 +120,9 @@ function formatPrice(price) {
 
 bot.onText(/\/help/,function(msg){
   bot.sendMessage(msg.chat.id,helpText);
+});
+bot.onText(/\/start/,function(msg){
+  bot.sendMessage(msg.chat.id, helpText);
 });
 ///////////////////
 //global error call
