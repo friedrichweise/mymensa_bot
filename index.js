@@ -31,19 +31,19 @@ function responseCanteenCity(msg, result, city) {
     for (i=0; i<result.length; i++) {
         var re = new RegExp(city+',', 'gi');
         var name = result[i].name.replace(re, '');
-        out.push([name+' ➡️','/meals '+result[i].id]);
+        var keyboard_object = {text:name, callback_data: '/meals '+result[i].id};
+        out.push([keyboard_object]);
     }
     if(out.length==0) botSendError(msg);
     else {
       var opts = {
           reply_to_message_id: msg.message_id,
-          reply_markup: JSON.stringify({keyboard: out, one_time_keyboard: true,resize_keyboard:false})
+          reply_markup: JSON.stringify({inline_keyboard: out})
       };
       bot.sendMessage(msg.chat.id, 'Ergebnisse für '+city+':', opts);
     }
   }
 }
-
 
 
 /////////////////////////
