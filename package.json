@@ -8,9 +8,9 @@
     "start": "nodemon -e js index.js"
   },
   "devDependencies": {
-  	"nodeman":"*"
+  	"nodemon":"*"
   },
   "dependencies": {
-    "node-telegram-bot-api": "^0.17.0"
+    "node-telegram-bot-api": "^0.27.1"
   }
 }

@@ -11,17 +11,22 @@ var extras = {"items":[
           {"icon": "🐷", "keywords":["Schweinefleisch"]}
 ]};
 
-var helpText = "Welcome to mymensa_bot \nPlease use the /mensa command to search for canteens in your city (example: /mensa Berlin). You are going to receive a custom keyboard that contains further commands.";
+var helpText = `
+Welcome to mymensa_bot \n
+Please use the /mensa command to search for canteens in your city (example: /mensa Berlin). 
+You are going to receive a custom keyboard that contains further commands.`;
 
 /////////////////////
 //get canteen by city
 /////////////////////
+
 bot.onText(/^\/mensa (.+)$/, function(msg, match){
   var city = match[1];
   bot.sendChatAction(msg.chat.id, 'typing').then(function () {
       mensa.getCanteenByCity(msg, city, responseCanteenCity);
   });
 });
+
 function responseCanteenCity(msg, result, city) {
   if(result===null) {
     botSendError(msg);
@@ -31,11 +36,12 @@ function responseCanteenCity(msg, result, city) {
     for (i=0; i<result.length; i++) {
         var re = new RegExp(city+',', 'gi');
         var name = result[i].name.replace(re, '');
-        var keyboard_object = {text:name, callback_data: '/meals '+result[i].id};
+        var keyboard_object = {text:name, callback_data: `${result[i].id}`};
         out.push([keyboard_object]);
     }
     if(out.length==0) botSendError(msg);
     else {
+      console.log(out);
       var opts = {
           reply_to_message_id: msg.message_id,
           reply_markup: JSON.stringify({inline_keyboard: out})
@@ -45,6 +51,15 @@ function responseCanteenCity(msg, result, city) {
   }
 }
 
+// Handle callback queries
+bot.on('callback_query', function onCallbackQuery(callbackQuery) {
+  const action = callbackQuery.data;
+  const msg = callbackQuery.message;
+
+  bot.sendChatAction(msg.chat.id, 'typing').then(function () {
+      mensa.getMealsByID(msg, action, '', responseMeals);
+  });
+});
 
 /////////////////////////
 //get meals by canteen id
@@ -61,9 +76,10 @@ bot.onText(/^\/meals (.+)$/, function(msg, match){
   }
 
   bot.sendChatAction(chatID, 'typing').then(function () {
-      mensa.getMealsByID(msg, canteenID,extraModifier, responseMeals);
+      mensa.getMealsByID(msg, canteenID, extraModifier, responseMeals);
   });
 });
+
 function responseMeals(msg, result, extraResult) {
     var output = '';
     if(result===null) {
@@ -98,7 +114,7 @@ function responseMeals(msg, result, extraResult) {
     var opts = {
           parse_mode: 'Markdown',
     };
-    bot.sendMessage(msg.chat.id, output,opts);
+    bot.sendMessage(msg.chat.id, output, opts);
 }
 function evaluateNotes(notes,query) {
   if(notes===null | query===null) return false;
@@ -119,11 +135,12 @@ function formatPrice(price) {
 
 
 bot.onText(/\/help/,function(msg){
-  bot.sendMessage(msg.chat.id,helpText);
+  bot.sendMessage(msg.chat.id, helpText);
 });
 bot.onText(/\/start/,function(msg){
   bot.sendMessage(msg.chat.id, helpText);
 });
+
 ///////////////////
 //global error call
 ///////////////////
@@ -131,8 +148,4 @@ function botSendError(msg) {
   bot.sendMessage(msg.chat.id, '❌ Keine Ergebnisse');
 }
 
-////////
-//@debug
-bot.on('message', function (msg) {
-  console.log('⭕️  New Message: '+msg.text);
-});
+
